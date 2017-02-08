@@ -7,19 +7,45 @@ public class Lisp {
 
 	/*
 	 * cette fonction permet de resoudre  une expresion Lisp   
-	 * le paramètre peut être transformer en token à l'aide de la fonction getTokens(expresion) 
+	 * le paramètre peut être transformer en token à l'aide de la fonction getTokens(expression) 
 	 * NB une seule pile peut être utilisée
 	 * retourn "double" le resultat de l'expresion 
 	 */
 	static public  double solve(String expression){
 		Stack<Character> stack = new Stack<Character>();
-		for(int i = 0; i<expression.length();i++)
-			stack.push(expression.charAt(i));
-		switch(stack.pop()){
-
+		String nombre = "";
+		double res = 0;
+		for(int i = expression.length()-1; i>=0;i--){
+			switch(expression.charAt(i)){
+			case ' ':
+			case '+':
+			case '-':
+			case '*':
+			case '/':
+			case ')':
+				stack.push(expression.charAt(i));
+				System.out.println(stack);
+				break;
+			case '(':
+				res = calculerResultatPartiel(stack);
+				mettreNombreDansPile(res,stack);
+				break;
+			default:
+				while((expression.charAt(i)<'9'&&expression.charAt(i)>'0')|expression.charAt(i)=='.'){
+					stack.push(expression.charAt(i));
+					i--;
+				}
+			}
 		}
+		return sortirNombrePile(stack);
+	}
+		/*
+		Stack<Double> stack = new Stack<Double>();
+		String nombre = "";
+		for(int i = 0; i<expression.length();i++){
+			
+*/
 
-	}			
 	/*
 	 * cette fonction vérifier si une expression est équilibree 
 	 * i.e. toutes parenthèse ouverte à une parenthèse fermante
@@ -37,7 +63,6 @@ public class Lisp {
 			if(expression.charAt(i) == ')')
 				amountLeft++;
 		}
-
 		return amountRight == amountLeft;
 
 		//	for(int i = 0; i<expression.length();i++)
@@ -85,6 +110,59 @@ public class Lisp {
 
 		return vectorOfTokens;
 	}
-
-
+	
+	static private double calculerResultatPartiel(Stack<Character> stack){
+		double res = 0;
+		switch(stack.pop()){
+		case '+':
+			res = sortirNombrePile(stack);
+			while(stack.peek()!=')'){
+				stack.pop();
+				res += sortirNombrePile(stack);
+			}
+			break;
+		case '-':
+			res = sortirNombrePile(stack);
+			while(stack.peek()!=')'){
+				stack.pop();
+				res -= sortirNombrePile(stack);						
+			}
+			break;
+		case '*':
+			res = sortirNombrePile(stack);
+			while(stack.peek()!=')'){
+				stack.pop();
+				res *= sortirNombrePile(stack);
+			}
+			break;
+		case '/':
+			res = sortirNombrePile(stack);
+			while(stack.peek()!=')'){
+				stack.pop();
+				res /= sortirNombrePile(stack);
+			}
+			break;
+		}
+		return res;
+	}
+	
+	static private double sortirNombrePile(Stack<Character> stack){
+		String nombre = "";
+		while(stack.peek()!=' '&&stack.peek()!=')'){
+			nombre+=stack.pop();
+		}
+		return Double.parseDouble(nombre);
+	}
+	
+	private static void mettreNombreDansPile(double res, Stack<Character> stack) {
+		if(stack.peek()<'9'&&stack.peek()>'0'){
+			stack.push(' ');
+		}
+		String nombre = res+"";
+		for(int i = nombre.length()-1;i>=0;i--){
+			stack.push(nombre.charAt(i));
+		}
+		//System.out.println(nombre);
+		//System.out.println(stack);
+	}
 }

@@ -4,7 +4,7 @@ import java.util.Stack;
 public class LispMain 
 {
 	public static void main(String[] args) throws IOException {
-		
+		/*
 		String [] tests={
 					"(*3(+(+5 5)(/10 2))))",
 					"(*3(+(+5 5))(/10 2)))",
@@ -24,6 +24,8 @@ public class LispMain
 				System.out.println(tests[t]+"\t= "+ Lisp.solve(tests[t]));
 			}	
 		}
+		*/
+		System.out.println("\t= "+ Lisp.solve("(*3(+5 5))"));
 	}
 	
 }	
