@@ -27,7 +27,7 @@ public class LinkedListQueue<AnyType> implements Queue<AnyType> {
 	private int size = 0; // Nombre d'elements dans la file.
 	private Node<AnyType> last; // Dernier element de la liste
 	private Node<AnyType> first; // Premier element de la liste
-	
+
 	public LinkedListQueue(){
 		this.first = new Node(null,null);
 		this.last = first;
@@ -56,8 +56,12 @@ public class LinkedListQueue<AnyType> implements Queue<AnyType> {
 	// Retire l'element en tete de file
 	// complexité asymptotique: O(1)
 	public void pop() throws EmptyQueueException {
-		this.first = this.first.getNext();
-		size--;
+		if (!this.empty()){
+			this.first = this.first.getNext();
+			size--;
+		} else{
+			throw new EmptyQueueException();
+		}
 	}
 
 	// Ajoute un element a la fin de la file

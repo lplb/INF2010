@@ -35,6 +35,8 @@ public class ArrayQueue<AnyType extends Object> implements Queue<AnyType> {
 		if(!this.empty()){
 			startIndex++;
 			size--;
+		} else {
+			throw new EmptyQueueException();
 		}
 	}
 
@@ -61,7 +63,7 @@ public class ArrayQueue<AnyType extends Object> implements Queue<AnyType> {
 	private void resize(int resizeFactor) {
 		AnyType[] temp = (AnyType[]) new Object[size*resizeFactor + 1];
 		for(int i = startIndex, j = 0; i<size+startIndex; i++, j++){
-			temp[i] = table[j];
+			temp[j] = table[i];
 		}
 		table = temp;
 		startIndex = 0;
