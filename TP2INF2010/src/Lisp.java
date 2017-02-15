@@ -24,18 +24,20 @@ public class Lisp {
 			case '/':
 			case ')':
 				stack.push(expression.charAt(i));
-				System.out.println(stack);
 				break;
 			case '(':
 				res = calculerResultatPartiel(stack);
 				mettreNombreDansPile(res,stack);
 				break;
 			default:
-				while((expression.charAt(i)<'9'&&expression.charAt(i)>'0')|expression.charAt(i)=='.'){
+				if(stack.peek()<='9'&&stack.peek()>='0') stack.push(' ');
+				while((expression.charAt(i)<='9'&&expression.charAt(i)>='0')|expression.charAt(i)=='.'){
 					stack.push(expression.charAt(i));
 					i--;
 				}
+				i++;
 			}
+			System.out.println(stack);
 		}
 		return sortirNombrePile(stack);
 	}
@@ -125,7 +127,7 @@ public class Lisp {
 			res = sortirNombrePile(stack);
 			while(stack.peek()!=')'){
 				stack.pop();
-				res -= sortirNombrePile(stack);						
+				res -= sortirNombrePile(stack);
 			}
 			break;
 		case '*':
@@ -143,26 +145,31 @@ public class Lisp {
 			}
 			break;
 		}
+		stack.pop();
 		return res;
 	}
 	
 	static private double sortirNombrePile(Stack<Character> stack){
 		String nombre = "";
-		while(stack.peek()!=' '&&stack.peek()!=')'){
+		while(!stack.isEmpty() && stack.peek()!=' ' && stack.peek()!=')'){
 			nombre+=stack.pop();
 		}
-		return Double.parseDouble(nombre);
+		try {
+			return Double.parseDouble(nombre);
+		} catch (java.lang.NumberFormatException e) {
+			System.out.println("\n-----------------------------------\n" + stack + "\n-----------------------------------\n");
+			return 0;
+		}
+		
 	}
 	
 	private static void mettreNombreDansPile(double res, Stack<Character> stack) {
-		if(stack.peek()<'9'&&stack.peek()>'0'){
+		if((!stack.isEmpty()) && ((stack.peek()<'9'&&stack.peek()>'0')||stack.peek()=='-')){
 			stack.push(' ');
 		}
-		String nombre = res+"";
+		String nombre = Math.abs(res)+"";
 		for(int i = nombre.length()-1;i>=0;i--){
 			stack.push(nombre.charAt(i));
 		}
-		//System.out.println(nombre);
-		//System.out.println(stack);
 	}
 }
