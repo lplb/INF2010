@@ -43,7 +43,6 @@ public class Lisp {
 				nombre = "";
 				i++;
 			}
-			System.out.println(stack);
 		}
 		return Double.parseDouble(stack.pop());
 	}
