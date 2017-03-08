@@ -28,22 +28,20 @@ public class QuadraticSpacePerfectHashing<AnyType> {
 	}
 
 	public boolean containsKey(int key) {
-		// A completer
-
+		return items[key] != null;
 	}
 
 	public boolean containsValue(AnyType x ) {
-		// A completer
-
+		int cle = getKey(x);
+		return items[cle]!=null && items[cle].equals(x);
 	}
 
 	public void remove (AnyType x) {
-		// A completer
-
+		items[getKey(x)] = null;
 	}
 
 	public int getKey (AnyType x) {
-		// A completer
+		return ((a*x.hashCode() + b) % p) % items.length;
 		
 	}
 
@@ -52,36 +50,46 @@ public class QuadraticSpacePerfectHashing<AnyType> {
 		Random generator = new Random( System.nanoTime() );
 
 		if(array == null || array.size() == 0) {
-			// A completer
+			a = b = 0; items = null;
 			return;
 		}
 		if(array.size() == 1) {
 			a = b = 0;
-
-			// A completer			
+			
+			items = (AnyType[]) new Object[1];
+			items[0] = array.get(0);
+			
 			return;
 		}
 
 		do {
-			items = null;
+			items = (AnyType[]) new Object[array.size()*array.size()];
 
-			// A completer
-
+			a = generator.nextInt(p+1) + 1;
+			b = generator.nextInt(p);
 		}
 		while( collisionExists( array ) );
 	}
 
 	@SuppressWarnings("unchecked")
 	private boolean collisionExists(ArrayList<AnyType> array) {
-		// A completer
-
+		int cle;
+		for(int i = 0; i < array.size(); i++){
+			cle = getKey(array.get(i));
+			if (items[cle]!=null) return true;
+			items[cle] = array.get(i);
+		}
 		return false;
 	}
 	
 	public String toString () {
 		String result = "";
 		
-		// A completer
+		for (int i = 0; i < items.length; i++){
+			if (items[i]!=null) {
+				result += ("( " + i + ", " + items[i] + "), ");
+			}
+		}
 		
 		
 		return result; 
