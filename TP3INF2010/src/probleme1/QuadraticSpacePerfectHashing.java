@@ -71,7 +71,6 @@ public class QuadraticSpacePerfectHashing<AnyType> {
 		while( collisionExists( array ) );
 	}
 
-	@SuppressWarnings("unchecked")
 	private boolean collisionExists(ArrayList<AnyType> array) {
 		int cle;
 		for(int i = 0; i < array.size(); i++){
