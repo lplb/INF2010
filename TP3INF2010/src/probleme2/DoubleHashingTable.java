@@ -37,9 +37,9 @@ public class DoubleHashingTable<AnyType> {
 	public AnyType get(AnyType obj){
 
 		int currentPos = findPos(obj);
-
+		
 		if(isActive(currentPos))
-			return obj;
+			return array[currentPos].element;
 		else
 			return null;
 	}
@@ -51,24 +51,23 @@ public class DoubleHashingTable<AnyType> {
 	private int findPos(AnyType obj){
 		int collisions = 0;
 		int currentPos = hash(obj, collisions);
-
+		
 		while(array[currentPos] != null && !array[currentPos].element.equals(obj)){
 			collisions++;
 			currentPos = hash(obj, collisions);
 			if( currentPos >= array.length )
 				currentPos %= array.length;
 		}
+		
 		return currentPos;
 	}
 
 	private int hash(AnyType obj, int collisions){
-		int hashVal = obj.hashCode();
+		int hashVal = Math.abs(obj.hashCode());
 
 		int h1 = hashVal % array.length;
 
-		final int R = previousPrime(array.length - 1);
-		System.out.println(array.length);
-		System.out.println(R);
+		final int R = previousPrime(array.length);
 		int h2 = R - (hashVal % R);
 		hashVal = h1 + collisions * h2;
 		return hashVal;
@@ -93,13 +92,13 @@ public class DoubleHashingTable<AnyType> {
 	}
 
 	private static int previousPrime(int n){
-		if( n <= 4 )
+		n--;
+		if( n <= 3 )
 			return 3;
 
 		while (!isPrime(n)){
-			n-=2;
+			n--;
 		}
-
 		return n;
 	}
 

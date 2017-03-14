@@ -35,5 +35,12 @@ public class MyHashMap<KeyType, ValueType> {
 		public int hashCode() {
 			return key.hashCode();
 		}
+
+		@Override
+		public String toString() {
+			return "Entry [key=" + key+ ", value=" + value + "]";
+		}
+		
+		
 	}
 }
