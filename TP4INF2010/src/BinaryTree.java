@@ -1,5 +1,5 @@
 
-public class BinaryTree<AnyType> {
+public class BinaryTree<AnyType extends Comparable<AnyType>> {
 	private Node<AnyType> root = null; // Racine de l'arbre
 
 	// insert element in arbre 
@@ -14,7 +14,23 @@ public class BinaryTree<AnyType> {
 	
 	@SuppressWarnings("unchecked")
 	private void insert(Node<AnyType> node, AnyType elem) {
-		// A completer
+		if (node == null) {
+			node = new Node<AnyType>(elem);
+		} else {
+			if (elem.compareTo(node.val) < 0) {
+				if (node.left == null) {
+					node.left = node;
+				} else { 
+					insert(node.left, elem);
+				}
+			} else {
+				if (node.right == null) {
+					node.right = node;
+				} else { 
+					insert(node.right, elem);
+				}
+			} 			
+		}
 	}
     
 	
@@ -33,24 +49,52 @@ public class BinaryTree<AnyType> {
 		return "{ " + this.printPostfixe(this.root) + " }";
 	}
 	
+	@SuppressWarnings("unchecked")
 	private int getHauteur(Node<AnyType> tree) {
-		// A completer 
-		
+		int hauteur = 1;
+		if (tree.left != null){
+			if (tree.right != null){
+				hauteur += Math.max(getHauteur(tree.left), getHauteur(tree.right));
+			} else {
+				hauteur += getHauteur(tree.left);
+			}
+		} else {
+			if (tree.right != null)
+				hauteur += getHauteur(tree.right);
+		}
+		return hauteur;
 	}	
 	
 	@SuppressWarnings("unchecked")
 	private String printPrefixe(Node<AnyType> node) {
-		// COMPLETER
+		String result = node.val.toString();
+		if(node.left != null)
+			result += printPostfixe(node.left);
+		if(node.right != null) 
+			result += printPostfixe(node.right);
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
 	private String printInfixe(Node<AnyType> node) {
-		// COMPLETER
+		String result = "";
+		if(node.left != null)
+			result += printPostfixe(node.left);
+		result += node.val;
+		if(node.right != null) 
+			result += printPostfixe(node.right);
+		return result;
 	}
 	
 	@SuppressWarnings("unchecked")
 	private String printPostfixe(Node<AnyType> node) {
-		// COMPLETER
+		String result = "";
+		if(node.left != null)
+			result += printPostfixe(node.left);
+		if(node.right != null) 
+			result += printPostfixe(node.right);
+		result += node.val;
+		return result;
 	}
 	
 	private class Node<AnyType> {
