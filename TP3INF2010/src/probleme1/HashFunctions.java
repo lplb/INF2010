@@ -44,7 +44,7 @@ public class HashFunctions {
 
 		// Tester la suppression
 		e.remove(100);
-		System.out.println(100 + " est present: " + e.containsValue(100));
+		System.out.println(100 + " est present: " + e.containsValue(100)); 
 		e.remove(99);
 		System.out.println(99 + " est present: " + e.containsValue(99));
 		e.remove(200);
@@ -113,8 +113,15 @@ public class HashFunctions {
 	 * Question 1
 	 */
 	public static ArrayList<Integer> randomIntegers(int length) {
-		// A complèter
-
-		return null;
+		Random generator = new Random( System.nanoTime());
+		ArrayList<Integer> listeAleatoire = new ArrayList(length);
+		for (int i = 0; i < length; i++){
+			int nouvInt = generator.nextInt(p);
+			while (listeAleatoire.contains(nouvInt)){
+				nouvInt = generator.nextInt(p);
+			}
+			listeAleatoire.add(nouvInt);
+		}
+		return listeAleatoire;
 	}
 }

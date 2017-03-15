@@ -42,7 +42,6 @@ public class QuadraticSpacePerfectHashing<AnyType> {
 
 	public int getKey (AnyType x) {
 		return ((a*x.hashCode() + b) % p) % items.length;
-		
 	}
 
 	@SuppressWarnings("unchecked")
