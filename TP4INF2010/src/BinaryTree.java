@@ -14,18 +14,19 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
 	
 	@SuppressWarnings("unchecked")
 	private void insert(Node<AnyType> node, AnyType elem) {
+		Node nouvNoeud = new Node<AnyType>(elem);
 		if (node == null) {
-			node = new Node<AnyType>(elem);
+			node = nouvNoeud;
 		} else {
 			if (elem.compareTo(node.val) < 0) {
 				if (node.left == null) {
-					node.left = node;
+					node.left = nouvNoeud;
 				} else { 
 					insert(node.left, elem);
 				}
 			} else {
 				if (node.right == null) {
-					node.right = node;
+					node.right = nouvNoeud;
 				} else { 
 					insert(node.right, elem);
 				}
@@ -67,11 +68,11 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
 	
 	@SuppressWarnings("unchecked")
 	private String printPrefixe(Node<AnyType> node) {
-		String result = node.val.toString();
+		String result = node.val + ", ";
 		if(node.left != null)
-			result += printPostfixe(node.left);
+			result += printPrefixe(node.left);
 		if(node.right != null) 
-			result += printPostfixe(node.right);
+			result += printPrefixe(node.right);
 		return result;
 	}
 
@@ -79,10 +80,10 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
 	private String printInfixe(Node<AnyType> node) {
 		String result = "";
 		if(node.left != null)
-			result += printPostfixe(node.left);
-		result += node.val;
+			result += printInfixe(node.left);
+		result += node.val + ", ";
 		if(node.right != null) 
-			result += printPostfixe(node.right);
+			result += printInfixe(node.right);
 		return result;
 	}
 	
@@ -93,7 +94,7 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
 			result += printPostfixe(node.left);
 		if(node.right != null) 
 			result += printPostfixe(node.right);
-		result += node.val;
+		result += node.val + ", ";
 		return result;
 	}
 	
