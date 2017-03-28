@@ -40,14 +40,20 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
 	}
  
 	public String printPrefixe() {
-		return "{ " + this.printPrefixe(this.root) + " }";
+		String result = "{ " + this.printPrefixe(this.root);
+		result = result.substring(0, result.length()-2)+ " }";
+		return result;
 	}
 	public String printInFixe() {
-		return "{ " + this.printInfixe(this.root) + " }";
+		String result = "{ " + this.printInfixe(this.root);
+		result = result.substring(0, result.length()-2)+ " }";
+		return result;
 	}
 	
 	public String printPostFixe() {
-		return "{ " + this.printPostfixe(this.root) + " }";
+		String result = "{ " + this.printPostfixe(this.root);
+		result = result.substring(0, result.length()-2)+ " }";
+		return result;
 	}
 	
 	@SuppressWarnings("unchecked")

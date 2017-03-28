@@ -39,7 +39,18 @@ public class RedBlackTree<T extends Comparable<? super T> >
 		return find(root, key);
 	}
 	private T find(RBNode<T> current, int key){
-		// à completer 
+		if (current.isNil()) {
+			return null;
+		} else {
+			if (key == current.value.hashCode()) {
+				return current.value;
+			} else {
+				if (key < current.value.hashCode())
+					return find(current.leftChild, key);
+				else
+					return find(current.rightChild, key);
+			}			
+		}
 	}
 	/*
 	 * insertion d'une valeur 
@@ -211,23 +222,53 @@ public class RedBlackTree<T extends Comparable<? super T> >
 
 	private void printTreePreOrder( RBNode<T> P )
 	{
-		// A MODIFIER/COMPLETER
-		//pour ne pas afficher la virgule apres le dernier element
+		System.out.print("(" + P + ")");
+		if(!P.leftChild.isNil()) {
+			System.out.print(" ; ");
+			printTreePreOrder(P.leftChild);
+		}
+		if(!P.rightChild.isNil()) {
+			System.out.print(" ; ");
+			printTreePreOrder(P.rightChild);
+		}//pour ne pas afficher la virgule apres le dernier element
 	}
 	private void printTreePostOrder( RBNode<T> P )
 	{
-		// A MODIFIER/COMPLETER
+		if(!P.leftChild.isNil()) {
+			printTreePostOrder(P.leftChild);
+			System.out.print(" ; ");			
+		}
+		if(!P.rightChild.isNil()) {
+			printTreePostOrder(P.rightChild);
+			System.out.print(" ; ");			
+		}
+		System.out.print("(" + P + ")");
 	}
 
 	private void printTreeAscendingOrder( RBNode<T> P )
 	{
-		// A MODIFIER/COMPLETER
-
+		if(!P.leftChild.isNil()) {
+			printTreeAscendingOrder(P.leftChild);
+			System.out.print(" ; ");
+		}
+		System.out.print("(" + P + ")");
+		if(!P.rightChild.isNil()) { 
+			System.out.print(" ; ");
+			printTreeAscendingOrder(P.rightChild);
+		}
 	}
 
 	private void printTreeDescendingOrder( RBNode<T> P )
 	{
-		// A MODIFIER/COMPLETER
+		if(!P.rightChild.isNil()) {
+			printTreeDescendingOrder(P.rightChild);
+			System.out.print(" ; ");
+		}
+		System.out.print("(" + P + ")");
+		if(!P.leftChild.isNil()){
+			System.out.print(" ; ");
+			printTreeDescendingOrder(P.leftChild);
+		}
 
 	}
 
@@ -241,7 +282,19 @@ public class RedBlackTree<T extends Comparable<? super T> >
 
 			Queue<RBNode<T>> q = new LinkedList<RBNode<T>>();
 			q.add(root);
-
+			
+			RBNode<T> P;
+			while(!q.isEmpty()){
+				P = q.poll();
+				System.out.print("(" + P + ")");
+				if(!P.leftChild.isNil())
+					q.add(P.leftChild);
+				if(!P.rightChild.isNil())
+					q.add(P.rightChild);
+				if(!q.isEmpty())
+					System.out.print(" ; ");
+			}
+			
 			// A COMPLETER
 
 
