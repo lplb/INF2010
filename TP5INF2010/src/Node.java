@@ -57,30 +57,101 @@ public class Node {
     }
 
     public Node fusion(Node autre) throws DifferentOrderTrees {
-
-        // à compléter
-        return null;
+    	if (this.ordre == autre.ordre && this.parent == null && autre.parent == null){
+    		Node nouvNoeud, nTemp;
+    		if (this.valeur<autre.valeur) {
+    			nouvNoeud = new Node(this.valeur);
+    			nouvNoeud.enfants = new ArrayList<Node>(this.enfants);
+    			nouvNoeud.ordre = this.ordre;
+    			nTemp = new Node(autre.valeur, nouvNoeud);
+    			nTemp.enfants = new ArrayList<Node>(autre.enfants);
+    			nTemp.ordre = autre.ordre;
+				nouvNoeud.enfants.add(nTemp);
+			} else {
+				nouvNoeud = new Node(autre.valeur);
+    			nouvNoeud.enfants = new ArrayList<Node>(autre.enfants);
+    			nouvNoeud.ordre = autre.ordre;
+    			nTemp = new Node(this.valeur, nouvNoeud);
+    			nTemp.enfants = new ArrayList<Node>(this.enfants);
+    			nTemp.ordre = this.ordre;
+				nouvNoeud.enfants.add(nTemp);
+			}
+    		nouvNoeud.ordre++;
+			return nouvNoeud;
+    	}
+		throw new DifferentOrderTrees();
     }
 
     private void moveUp() {
-        // à compléter
+        while(parent!=null){
+        	Node temp = new Node(parent.valeur, parent.parent);
+        	temp.enfants = parent.enfants;
+        	temp.enfants.remove(this);
+        	for(Node enfant: enfants){
+        		enfant.parent = parent;
+        	}
+        	parent.enfants = enfants;
+        	enfants = temp.enfants;
+        	enfants.add(parent);
+        	parent = temp.parent;
+        	for(Node enfant: enfants){
+        		enfant.parent = this;
+        		//enfant.print("  ");        		
+        	}
+        	//print("  ");
+        }
     }
 
     public ArrayList<Node> delete() {
-        // à compléter
-        return null;
+        moveUp();
+        for (Node enfant: enfants){
+        	enfant.parent = null;
+        }
+        return enfants;
     }
 
     public void print(String tabulation) {
-        // à compléter
+        System.out.print(valeur);
+        for(Node enfant: enfants){
+        	enfant.print(tabulation, 1);
+        	System.out.print("\n ");
+        }
+        System.out.println("\n");
     }
     
-    public Node findValue(int valeur) {
+    private void print(String tabulation, int niveauActuel) {
+    	System.out.print(tabulation);
+    	System.out.print(valeur);
+        for(Node enfant: enfants){
+        	enfant.print(tabulation, niveauActuel+1);
+        	if(enfants.indexOf(enfant) < enfants.size() - 1){
+        		System.out.print("\n ");
+        		for (int i = 0; i < niveauActuel; i++){
+        			System.out.print(tabulation + " ");
+        		}
+        	}
+        }
+	}
+
+	public Node findValue(int valeur) {
         return findValue(this, valeur);
     }
     
     public Node findValue (Node n, int valeur) {
-        // à compléter
+        if(valeur == n.valeur){
+        	return n;
+        } else {
+        	Node nTemp = null;
+        	for (Node enfant: n.enfants){
+        		if (valeur >= enfant.valeur){
+        			nTemp = findValue(enfant, valeur);
+        			if ( nTemp != null){
+        				return nTemp;
+        			}
+        		}
+        	}
+        	return null;
+        }
     }
     
 }
