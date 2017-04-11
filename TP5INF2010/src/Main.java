@@ -13,21 +13,21 @@ public class Main {
 		Node noeud8 = new Node(8);
 		
 		
-		
-		noeud1.print("  ");
-		System.out.println("_________________________________________");
+//		
+//		noeud1.print("  ");
+//		System.out.println("_________________________________________");
 		try {
 			noeud1.fusion(noeud2);
 		} catch (DifferentOrderTrees e) {
 			e.printStackTrace();
 		}
-		noeud1.print("  ");
-		System.out.println("_________________________________________");
+//		noeud1.print("  ");
+//		System.out.println("_________________________________________");
 		
 		try {
 			noeud1.fusion(noeud3);
 		} catch (DifferentOrderTrees e) {
-			System.out.println("Arbres de differents ordres");
+//			System.out.println("Arbres de differents ordres");
 		}
 		
 		try {
@@ -35,15 +35,15 @@ public class Main {
 		} catch (DifferentOrderTrees e) {
 			e.printStackTrace();
 		}
-		noeud1.print("  ");
-		System.out.println("_________________________________________");
-		
-		noeud1.findValue(3).print("  ");
-		System.out.println("_________________________________________");
-		
-		noeud1.findValue(2).print("  ");
-		System.out.println("_________________________________________");
-		try {
+//		noeud1.print("  ");
+//		System.out.println("_________________________________________");
+//		
+//		noeud1.findValue(3).print("  ");
+//		System.out.println("_________________________________________");
+//		
+//		noeud1.findValue(2).print("  ");
+//		System.out.println("_________________________________________");
+		/*try {
 			noeud1.fusion(noeud5.fusion(noeud6).fusion(noeud7.fusion(noeud8)));
 		} catch (DifferentOrderTrees e) {
 			// TODO Auto-generated catch block
@@ -76,36 +76,45 @@ public class Main {
 			n.print("  ");
 		}
 		System.out.println(restants);
+		*/
 		
 		Monceau monceau = new Monceau();
 		monceau.print();
 		
 		//test insertion
-		monceau.insert(0);
-		monceau.insert(7);
-		monceau.insert(9);
-		monceau.insert(4);
+		//monceau.insert(0);
+		//monceau.insert(1);
+		monceau.arbres = noeud1.findValue(3).delete();
+		//monceau.insert(4);
+		
 		monceau.print();
-		
-		
-		monceau.insert(4);
-		monceau.print();
-		
-		monceau.delete(7);
-		monceau.delete(4);
-		monceau.print();
-		
-		monceau.delete(3);
-		monceau.print();
-		
 		Monceau monceau2 = new Monceau();
-		for(int i = 0; i < 10; i++){
-			monceau2.insert((int)(Math.random()*100) + 1);
+		try {
+			monceau2.arbres.add(noeud5.fusion(noeud6));
+		} catch (DifferentOrderTrees e) {
+			e.printStackTrace();
 		}
-		monceau2.print();
-		
 		monceau.fusion(monceau2);
 		monceau.print();
+
+		Monceau monceau3 = new Monceau();
+		try {
+			monceau3.arbres.add(noeud7.fusion(noeud8));
+		} catch (DifferentOrderTrees e) {
+			e.printStackTrace();
+		}
+		//test fusion
+		monceau.fusion(monceau3);
+		
+		monceau.print();
+				
+		//monceau.insert(10);
+		
+		//monceau.print();
+		monceau.delete(4);
+		
+		//monceau.print();
+		
 	}
 
 }

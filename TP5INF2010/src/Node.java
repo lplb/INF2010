@@ -59,15 +59,14 @@ public class Node {
     public Node fusion(Node autre) throws DifferentOrderTrees {
     	if (this.ordre == autre.ordre) {
     		if (this.parent == null && autre.parent == null){
-    			Node nTemp;
-    			if (this.valeur<autre.valeur) {
-    				nTemp = autre;
-    				enfants.add(nTemp);
+    			if (this.valeur<autre.valeur){
+    				enfants.add(autre);
+    				autre.parent = this;
     				ordre++;
     				return this;
     			} else {
-    				nTemp = this;
-    				autre.enfants.add(nTemp);
+    				autre.enfants.add(this);
+    				parent = autre;
     				autre.ordre++;
     				return autre;
     			}
@@ -79,18 +78,23 @@ public class Node {
 
     private void moveUp() {
         while(parent!=null){
-        	Node temp = parent;
-        	temp.enfants.remove(this);
+        	ArrayList<Node> enfantsParent = new ArrayList<Node>();
+        	enfantsParent.addAll(parent.enfants);
+        	enfantsParent.remove(this);
         	for(Node enfant: enfants){
         		enfant.parent = parent;
         	}
         	parent.enfants = enfants;
-        	enfants = temp.enfants;
+        	enfants = enfantsParent;
+        	parent.ordre--;
         	enfants.add(parent);
-        	parent = temp.parent;
+        	parent = parent.parent;
+        	if(parent!=null)
+        		parent.enfants.add(this);
         	for(Node enfant: enfants){
         		enfant.parent = this;
         	}
+//        	print("  ");
         }
     }
 
@@ -108,7 +112,7 @@ public class Node {
         	enfant.print(tabulation, 1);
         	System.out.print("\n ");
         }
-        System.out.println("\n");
+        System.out.print("\n");
     }
     
     private void print(String tabulation, int niveauActuel) {
