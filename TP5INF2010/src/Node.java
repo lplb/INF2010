@@ -86,15 +86,18 @@ public class Node {
         	}
         	parent.enfants = enfants;
         	enfants = enfantsParent;
-        	parent.ordre--;
+        	parent.ordre = ordre;
+        	ordre+=2;
         	enfants.add(parent);
+        	if(parent.parent!=null)
+        		parent.parent.enfants.remove(parent);
         	parent = parent.parent;
-        	if(parent!=null)
+        	if(parent!=null){
         		parent.enfants.add(this);
+        	}
         	for(Node enfant: enfants){
         		enfant.parent = this;
         	}
-//        	print("  ");
         }
     }
 

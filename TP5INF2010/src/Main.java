@@ -108,12 +108,29 @@ public class Main {
 		
 		monceau.print();
 				
-		//monceau.insert(10);
-		
-		//monceau.print();
-		monceau.delete(4);
-		
-		//monceau.print();
+		monceau.insert(10);
+		monceau.print();
+		monceau.insert(4);
+		monceau.print();
+		monceau.insert(75);
+		monceau.print();
+		monceau.insert(3);
+		monceau.print();
+		monceau.insert(9);
+		monceau.print();
+		monceau.insert(11);
+		monceau.print();
+		monceau.insert(4);
+		monceau.print();
+		monceau.insert(75);
+		monceau.print();
+		monceau.insert(3);
+		monceau.print();
+		monceau.insert(9);
+		monceau.print();
+
+		monceau.delete(11);
+		monceau.print();
 		
 	}
 

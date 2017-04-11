@@ -21,20 +21,31 @@ public class Monceau {
     	Monceau monceauFinal = new Monceau();
     	for(int j=0; j<=ordreMax; j++){
     		listeArbresOrdreJ = new ArrayList<Node>();
-    		if (retenue != null)
-    			listeArbresOrdreJ.add(retenue);
+    		Node arbreTemp;
     		for(Node arbre: arbres){
             	if(arbre.ordre == j){
-            		listeArbresOrdreJ.add(arbre);
+            		arbreTemp = new Node(arbre.getVal());
+            		arbreTemp.ordre = arbre.ordre;
+            		for(Node enfant: arbre.getEnfants()){
+            			arbreTemp.addEnfant(enfant);
+            		}
+            		listeArbresOrdreJ.add(arbreTemp);
             		break;
             	}
             }
         	for(Node arbre: autre.arbres){
         		if(arbre.ordre == j){
-        			listeArbresOrdreJ.add(arbre);
+        			arbreTemp = new Node(arbre.getVal());
+            		arbreTemp.ordre = arbre.ordre;
+            		for(Node enfant: arbre.getEnfants()){
+            			arbreTemp.addEnfant(enfant);
+            		}
+            		listeArbresOrdreJ.add(arbreTemp);
         			break;
         		}
             }
+        	if (retenue != null)
+        		listeArbresOrdreJ.add(retenue);
         	switch(listeArbresOrdreJ.size()){
         	case 1:
         		monceauFinal.arbres.add(listeArbresOrdreJ.get(0));
@@ -70,19 +81,58 @@ public class Monceau {
     }
     
     public boolean delete (int val) {
+//    	boolean deleted = false;
+//		for(int i=0; i< arbres.size(); i++){
+//			Node arbre = arbres.get(i);
+//    	//for(Node arbre : arbres){
+//			Node noeud = arbre.findValue(val);
+//			Monceau nouvMonceau;
+//			while(noeud != null){
+//				Node parent = noeud;
+//				while(parent.parent!=null){
+//					parent = parent.parent;
+//				}
+//				arbres.remove(parent);
+//				nouvMonceau = new Monceau();
+//				deleted = true;
+//				nouvMonceau.arbres = noeud.delete();
+//				nouvMonceau.print();
+//				print();
+//				fusion(nouvMonceau);
+//				print();
+//				noeud = arbre.findValue(val);
+//			}
+//		} 
+//		return deleted;
+    	/**
+    	 * 
+    	 */
+    	ArrayList<Monceau> monceaux = new ArrayList<Monceau>();
     	boolean deleted = false;
-		for(Node arbre : arbres){
+//		for(Node arbre : arbres){
+    	for(int i=0; i< arbres.size(); i++){
+			Node arbre = arbres.get(i);
 			Node noeud = arbre.findValue(val);
 			Monceau nouvMonceau;
-			while(noeud != null){
-				nouvMonceau = new Monceau();
+			if(noeud != null){
+//				Node parent = noeud;
+//				while(parent.parent!=null){
+//					parent = parent.parent;
+//				}
+				arbres.remove(arbre);
 				deleted = true;
+				nouvMonceau = new Monceau();
 				nouvMonceau.arbres = noeud.delete();
-				fusion(nouvMonceau);
-				print();
+				System.out.println(".a.auafkj,.vpejoo--=843");
+				nouvMonceau.print();
+				monceaux.add(nouvMonceau);
 				noeud = arbre.findValue(val);
+				System.out.println(".a.auafkj,.vpejoo--=843");
 			}
 		} 
+		for(Monceau monceau: monceaux){
+			fusion(monceau);
+		}
 		return deleted;
     }
     
