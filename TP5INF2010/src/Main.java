@@ -3,53 +3,79 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) {
-		Node noeud = new Node(2);
-		noeud.print("  ");
+		Node noeud1 = new Node(1);
+		Node noeud2 = new Node(2);
+		Node noeud3 = new Node(3);
+		Node noeud4 = new Node(4);
+		Node noeud5 = new Node(5);
+		Node noeud6 = new Node(6);
+		Node noeud7 = new Node(7);
+		Node noeud8 = new Node(8);
+		
+		
+		
+		noeud1.print("  ");
 		System.out.println("_________________________________________");
 		try {
-			noeud = noeud.fusion(new Node(4));
+			noeud1.fusion(noeud2);
 		} catch (DifferentOrderTrees e) {
 			e.printStackTrace();
 		}
-		noeud.print("  ");
+		noeud1.print("  ");
 		System.out.println("_________________________________________");
 		
 		try {
-			noeud = noeud.fusion(new Node(5));
+			noeud1.fusion(noeud3);
 		} catch (DifferentOrderTrees e) {
 			System.out.println("Arbres de differents ordres");
 		}
 		
-		Node noeud1 = new Node(1), noeud5 = new Node(5);
 		try {
-			noeud = noeud.fusion(noeud1.fusion(noeud5));
+			noeud1.fusion(noeud3.fusion(noeud4));
 		} catch (DifferentOrderTrees e) {
 			e.printStackTrace();
 		}
-		noeud.print("  ");
+		noeud1.print("  ");
 		System.out.println("_________________________________________");
 		
-		noeud.findValue(5).print("  ");
+		noeud1.findValue(3).print("  ");
 		System.out.println("_________________________________________");
 		
-		noeud.findValue(2).print("  ");
+		noeud1.findValue(2).print("  ");
 		System.out.println("_________________________________________");
 		try {
-			noeud = noeud.fusion(noeud);
+			noeud1.fusion(noeud5.fusion(noeud6).fusion(noeud7.fusion(noeud8)));
 		} catch (DifferentOrderTrees e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		noeud.print("  ");
+		noeud1.print("  ");
 		System.out.println("_________________________________________");
 		
-		ArrayList<Node> restants = noeud.findValue(4).delete();
+		ArrayList<Node> restants = noeud1.findValue(4).delete();
 		for(Node n: restants){
 			n.print("  ");
 		}
 		System.out.println(restants);
 		
+		noeud1.print("  ");
+		
 		System.out.println("_________________________________________");
+		
+		restants = noeud4.delete();
+		for(Node n: restants){
+			n.print("  ");
+		}
+		System.out.println(restants);
+		
+		noeud1.print("  ");
+		System.out.println("_________________________________________");
+		
+		restants = noeud5.delete();
+		for(Node n: restants){
+			n.print("  ");
+		}
+		System.out.println(restants);
 		
 		Monceau monceau = new Monceau();
 		monceau.print();

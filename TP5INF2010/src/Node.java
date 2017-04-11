@@ -57,35 +57,29 @@ public class Node {
     }
 
     public Node fusion(Node autre) throws DifferentOrderTrees {
-    	if (this.ordre == autre.ordre && this.parent == null && autre.parent == null){
-    		Node nouvNoeud, nTemp;
-    		if (this.valeur<autre.valeur) {
-    			nouvNoeud = new Node(this.valeur);
-    			nouvNoeud.enfants = new ArrayList<Node>(this.enfants);
-    			nouvNoeud.ordre = this.ordre;
-    			nTemp = new Node(autre.valeur, nouvNoeud);
-    			nTemp.enfants = new ArrayList<Node>(autre.enfants);
-    			nTemp.ordre = autre.ordre;
-				nouvNoeud.enfants.add(nTemp);
-			} else {
-				nouvNoeud = new Node(autre.valeur);
-    			nouvNoeud.enfants = new ArrayList<Node>(autre.enfants);
-    			nouvNoeud.ordre = autre.ordre;
-    			nTemp = new Node(this.valeur, nouvNoeud);
-    			nTemp.enfants = new ArrayList<Node>(this.enfants);
-    			nTemp.ordre = this.ordre;
-				nouvNoeud.enfants.add(nTemp);
-			}
-    		nouvNoeud.ordre++;
-			return nouvNoeud;
+    	if (this.ordre == autre.ordre) {
+    		if (this.parent == null && autre.parent == null){
+    			Node nTemp;
+    			if (this.valeur<autre.valeur) {
+    				nTemp = autre;
+    				enfants.add(nTemp);
+    				ordre++;
+    				return this;
+    			} else {
+    				nTemp = this;
+    				autre.enfants.add(nTemp);
+    				autre.ordre++;
+    				return autre;
+    			}
+    		}
+    		return null;
     	}
 		throw new DifferentOrderTrees();
     }
 
     private void moveUp() {
         while(parent!=null){
-        	Node temp = new Node(parent.valeur, parent.parent);
-        	temp.enfants = parent.enfants;
+        	Node temp = parent;
         	temp.enfants.remove(this);
         	for(Node enfant: enfants){
         		enfant.parent = parent;
@@ -96,9 +90,7 @@ public class Node {
         	parent = temp.parent;
         	for(Node enfant: enfants){
         		enfant.parent = this;
-        		//enfant.print("  ");        		
         	}
-        	//print("  ");
         }
     }
 
