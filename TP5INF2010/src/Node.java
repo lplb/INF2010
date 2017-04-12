@@ -77,36 +77,25 @@ public class Node {
     }
 
     private void moveUp() {
-        while(parent!=null){
-        	ArrayList<Node> enfantsParent = new ArrayList<Node>();
-        	enfantsParent.addAll(parent.enfants);
-        	enfantsParent.remove(this);
-        	for(Node enfant: enfants){
-        		enfant.parent = parent;
-        	}
-        	parent.enfants = enfants;
-        	enfants = enfantsParent;
-        	parent.ordre = ordre;
-        	ordre+=2;
-        	enfants.add(parent);
-        	if(parent.parent!=null)
-        		parent.parent.enfants.remove(parent);
-        	parent = parent.parent;
-        	if(parent!=null){
-        		parent.enfants.add(this);
-        	}
-        	for(Node enfant: enfants){
-        		enfant.parent = this;
-        	}
-        }
+    	int temp;
+    	temp = this.valeur;
+    	if(parent != null){
+    		this.valeur = parent.getVal();
+    		parent.valeur = temp;
+    	}
     }
 
     public ArrayList<Node> delete() {
-        moveUp();
-        for (Node enfant: enfants){
-        	enfant.parent = null;
-        }
-        return enfants;
+
+    	if (parent != null){
+    		this.moveUp();
+    		return this.parent.delete();
+    	}else{
+    		for(Node enfant : enfants){
+    			enfant.parent = null;
+    		}
+    	}
+    	return enfants;
     }
 
     public void print(String tabulation) {

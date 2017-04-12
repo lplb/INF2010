@@ -124,13 +124,15 @@ public class Main {
 		monceau.print();
 		monceau.insert(75);
 		monceau.print();
-		monceau.insert(3);
-		monceau.print();
-		monceau.insert(9);
-		monceau.print();
+//		monceau.insert(3);
+//		monceau.print();
+//		monceau.insert(9);
+//		monceau.print();
 
-		monceau.delete(11);
+		monceau.delete(4);
+		System.out.println("FUCK YOU!!!");
 		monceau.print();
+		
 		
 	}
 
